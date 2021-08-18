@@ -1,0 +1,26 @@
+---
+- name: make sure yum-utils are installed
+  ansible.builtin.yum: 
+    name: yum-utils
+    state: latest
+
+- name: add docker repository
+  get_url:
+    url: https://download.docker.com/linux/centos/docker-ce.repo
+    dest: /etc/yum.repos.d/docer-ce.repo
+    
+- name: Install docker packages
+  ansible.builtin.yum:
+    name: "{{ docker_packages }}"
+    state: latest
+  vars:
+    docker_packages: 
+    - docker-ce 
+    - docker-ce-cli 
+    - containerd.io
+
+- name: start docker
+  systemd:
+    name: docker
+    state: started
+    enabled: yes

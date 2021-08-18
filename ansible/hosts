@@ -9,6 +9,13 @@ kube_worker2.dcg.team
 [lb]
 kube_lb.dcg.team
 
+[kube_nodes:children]
+masters
+workers
+
+[master1]
+kube_master1.dcg.team
+
 [all:vars]
 ansible_connection=ssh
 ansible_user=root

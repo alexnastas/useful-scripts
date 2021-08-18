@@ -3,4 +3,8 @@
   roles:
 #    - yum_update
 #    - inject_ssh_key
-    - network_config
+#    - network_config
+
+- hosts: kube_nodes
+  roles:
+    - install_docker
