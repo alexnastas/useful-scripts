@@ -1,0 +1,35 @@
+- name: upgrade all packages
+  yum: name=* state=latest
+
+- name: install yum-utils
+  yum: name=yum-utils state=latest
+
+- name: Check if reboot is required
+  command: needs-restarting -r
+  register: reboot_required
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+  failed_when: reboot_required.rc !=0 and reboot_required.rc !=1
+
+- name: debug
+  ansible.builtin.debug:
+    msg: "{{ reboot_required }}"
+
+- name: Reboot Server if Necessary
+  command: shutdown -r now "Ansible Updates Triggered"
+  become: true
+  ignore_errors: yes
+  async: 30
+  poll: 0
+  when: reboot_required.rc == 1
+
+- name: Pausing to allow server to shutdown and terminate our SSH connection
+  pause: seconds=30
+  when: reboot_required.rc == 1
+
+- name: Wait for reboot to complete and SSH to become available
+  local_action: wait_for host={{ inventory_hostname }} port=22
+    state=started delay=30 timeout=600
+  retries: 30
+  delay: 10
+  when: reboot_required.rc == 1
+
