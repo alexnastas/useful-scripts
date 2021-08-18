@@ -2,3 +2,4 @@
 - hosts: all
   roles:
 #     - yum_update
+    - inject_ssh_key
