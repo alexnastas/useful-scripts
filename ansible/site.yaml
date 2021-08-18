@@ -1,5 +1,6 @@
 ---
 - hosts: all
   roles:
-#     - yum_update
-    - inject_ssh_key
+#    - yum_update
+#    - inject_ssh_key
+    - network_config

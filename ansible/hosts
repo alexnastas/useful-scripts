@@ -1,3 +1,14 @@
+[masters]
+kube_master1.dcg.team
+kube_master2.dcg.team
+
+[workers]
+kube_worker1.dcg.team
+kube_worker2.dcg.team
+
+[lb]
+kube_lb.dcg.team
+
 [all:vars]
 ansible_connection=ssh
 ansible_user=root
