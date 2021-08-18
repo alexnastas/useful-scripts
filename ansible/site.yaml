@@ -7,4 +7,10 @@
 
 - hosts: kube_nodes
   roles:
-    - install_docker
+#    - install_docker
+#    - install_k8s_prereqs
+    - install_k8s_prereqs
+
+- hosts: master1
+  roles:
+#    - install_docker

@@ -1,0 +1,31 @@
+---
+- name: Add Kubernetes repo
+  ansible.builtin.yum_repository: 
+    name: kubernetes
+    description: Official Kubernetes Repository
+    baseurl: https://packages.cloud.google.com/yum/repos/kubernetes-el7-\$basearch
+    enabled: yes
+    gpgcheck: yes
+    repo_gpgcheck: yes
+    gpgkey: https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+    exclude: 
+      - kubelet 
+      - kubeadm 
+      - kubectl
+
+- name: Install kubelet kubectl and kubeadm
+  ansible.builtin.yum:
+    name: "{{ kube_packages }}"
+    state: latest
+    disable_excludes: kubernetes
+  vars:
+    kube_packages:
+    - kubectl
+    - kubeadm
+    - kubelet
+
+- name: Enable kubelet startup
+  ansible.builtin.systemd:
+    name: kubelet
+    enabled: yes
+    state: started
