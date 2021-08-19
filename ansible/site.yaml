@@ -9,8 +9,22 @@
   roles:
 #    - install_docker
 #    - install_k8s_prereqs
-    - install_k8s_prereqs
+#    - install_k8s_prereqs
 
 - hosts: master1
   roles:
 #    - install_docker
+
+- hosts: master2
+  roles:
+    - install_docker
+
+- hosts: worker1
+  roles:
+    - install_docker
+
+- hosts: worker2
+  roles:
+    - install_docker
+
+    

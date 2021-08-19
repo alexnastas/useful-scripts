@@ -1,20 +1,30 @@
 [masters]
-kube_master1.dcg.team
-kube_master2.dcg.team
+kube-master1.dcg.team
+kube-master2.dcg.team
 
 [workers]
-kube_worker1.dcg.team
-kube_worker2.dcg.team
+kube-worker1.dcg.team
+kube-worker2.dcg.team
 
 [lb]
-kube_lb.dcg.team
+kube-lb.dcg.team
 
 [kube_nodes:children]
 masters
 workers
 
 [master1]
-kube_master1.dcg.team
+kube-master1.dcg.team
+
+[master2]
+kube-master2.dcg.team
+
+[worker1]
+kube-worker1.dcg.team
+
+[worker2]
+kube-worker2.dcg.team
+
 
 [all:vars]
 ansible_connection=ssh

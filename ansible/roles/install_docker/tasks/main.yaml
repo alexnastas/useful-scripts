@@ -19,8 +19,19 @@
     - docker-ce-cli 
     - containerd.io
 
+- name: Set the cgroup driver to systemd
+  ansible.builtin.file:
+    path: /etc/docker/
+    state: directory
+
+- name: Set the cgroup driver to systemd
+  ansible.builtin.copy:
+    src: files/daemon.json
+    dest: /etc/docker/daemon.json
+
 - name: start docker
   systemd:
     name: docker
     state: started
     enabled: yes
+    daemon_reload: yes
